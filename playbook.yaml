@@ -68,7 +68,7 @@
       append: true
   - name: enable and start docker service
     systemd:
-      name: {{ item }}
+      name: "{{ item }}"
       state: started
       enabled: true
     loop:
