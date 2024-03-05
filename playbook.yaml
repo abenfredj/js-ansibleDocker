@@ -1,0 +1,76 @@
+---
+- name: Install Docker and Run container
+  hosts: all
+  become: yes
+  vars:
+    arch_mapping:
+      x86_64: amd64
+      aarch64: arm64
+  tasks:
+  - name: update and upgrade all pkg to the latest versions
+    apt:
+      update_cahe: yes
+      upgrade: dist
+      cache_valid_time: 3600
+  - name: install required packages
+    apt:
+      pkg:
+        - ca-certificates
+        - curl
+        - apt-transport-https
+        - gnupg
+        - software-properties-common
+        - python3-pip
+        - virtualenv
+        - python3-setuptools
+      state: latest
+      update_cache: true
+  - name: create folder keyrings for GPG docker's
+    file:
+      path: /etc/apt/keyrings
+      state: directory
+      mode: '0755'
+  - name: add GPG key of Docker
+    apt_key:
+      url: https://download.docker.com/linux/ubuntu/gpg
+      keyrings: /etc/apt/keyrings/docker.asc
+      state: present
+  - name: print arch variables
+    debug:
+      msg: "Architecture: {{ ansible_architecture }}, Codename: {{ ansible_lsb.codename }}"
+  - name: add Docker repo
+    apt_repository:
+      repo: >-
+          deb [arch={{ arch_mapping[ansible_architecture] | default(ansible_architecture) }}
+          signed-by=etc/apt/keyrings/docker.asc]
+          https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
+      filename: docker
+      state: present
+  - name: install Docker and related pkg
+    apt:
+      name: {{ item }}
+      state: present
+      update_cache: true
+    loop:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin 
+  - name: add group docker
+    group:
+      name: docker
+      state: present
+  - name: add user to group docker
+    user:
+      name: "{{ ansible_user }}"
+      groups: docker
+      append: true
+  - name: enable and start docker service
+    systemd:
+      name: {{ item }}
+      state: started
+      enabled: true
+    loop:
+     - docker.service
+     - contenaird.service
