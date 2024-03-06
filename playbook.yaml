@@ -68,7 +68,7 @@
       - containerd.io
       - docker-buildx-plugin
       - docker-compose-plugin 
-      - python
+      - python-is-python3
   - name: add group docker
     group:
       name: docker
