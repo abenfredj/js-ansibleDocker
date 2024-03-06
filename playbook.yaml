@@ -111,7 +111,8 @@
       name: "{{ container_name }}{{ item }}"
       image: "{{ container_image }}"
       command: "{{ container_command }}"
-      state: present
+      state: started
+      restart: yes
     with_sequence: count={{ containers }} 
   - name: create volume for httpd
     docker_volume:
