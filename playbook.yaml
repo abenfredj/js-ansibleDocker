@@ -87,7 +87,7 @@
       name: python
       path: /usr/bin/python3.10
       link: /usr/bin/python
-      state: auto
+      priority: 10
 
   - name: enable and start docker service
     systemd:
