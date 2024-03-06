@@ -82,6 +82,13 @@
     loop:
     - anwar
     - jenkins
+  - name: Install Python 3.5 and reset selection to auto
+    alternatives:
+      name: python
+      path: /usr/bin/python3.10
+      link: /usr/bin/python
+      state: auto
+
   - name: enable and start docker service
     systemd:
       name: "{{ item }}"
