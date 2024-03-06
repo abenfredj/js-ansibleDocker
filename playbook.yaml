@@ -6,6 +6,8 @@
     arch_mapping:
       x86_64: amd64
       aarch64: arm64
+  vars_files:
+  - vars/default.yaml
   tasks:
   - name: update and upgrade all pkg to the latest versions
     apt:
@@ -86,3 +88,14 @@
     loop:
      - docker.service
      - containerd.service
+- name: Pull image ubuntu 22.04
+  docker_image:
+    name: "{{ container_image }}"
+    source: pull
+- name: Create containers
+  docker_container:
+    name: "{{ container_name }}{{ item }}"
+    image: "{{ container_image }}"
+    command: "{{ container_command }}"
+    state: present
+  with_sequence: count={{ containers }} 

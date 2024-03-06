@@ -1,0 +1,5 @@
+---
+containers: 2
+container_name: websrv
+container_image: ubuntu:22.04
+container_command: sleep 1d
