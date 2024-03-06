@@ -113,3 +113,16 @@
       command: "{{ container_command }}"
       state: present
     with_sequence: count={{ containers }} 
+  - name: create volume for httpd
+    docker_volume:
+      name: data
+  - name: Create container httpd
+    docker_container:
+      name: webhttpd01
+      image: httpd
+      state: started
+      restart: yes
+      ports:
+        - "8083:80"
+      volumes:
+        - "data:/usr/local/apache2/htdocs"
