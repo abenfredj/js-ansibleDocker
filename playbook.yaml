@@ -9,7 +9,7 @@
   tasks:
   - name: update and upgrade all pkg to the latest versions
     apt:
-      update_cahe: yes
+      update_cache: yes
       upgrade: dist
       cache_valid_time: 3600
   - name: install required packages
