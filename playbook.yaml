@@ -72,9 +72,12 @@
       state: present
   - name: add user to group docker
     user:
-      name: "{{ ansible_user }}"
+      name: "{{ item }}"
       groups: docker
       append: true
+    loop:
+    - anwar
+    - jenkins
   - name: enable and start docker service
     systemd:
       name: "{{ item }}"
