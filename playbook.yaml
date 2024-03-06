@@ -25,15 +25,15 @@
         - python3-setuptools
       state: latest
       update_cache: true
-  - name: create folder keyrings for GPG docker's
-    file:
-      path: /etc/apt/keyrings
-      state: directory
-      mode: '0755'
+ # - name: create folder keyrings for GPG docker's
+ #   file:
+ #     path: /etc/apt/keyrings
+ #     state: directory
+ #     mode: '0755'
   - name: add GPG key of Docker
     apt_key:
       url: https://download.docker.com/linux/ubuntu/gpg
-      keyring: /etc/apt/keyrings/docker.gpg
+  #    keyring: /etc/apt/keyrings/docker.gpg
       state: present
   - name: print arch variables
     debug:
