@@ -68,6 +68,7 @@
       - containerd.io
       - docker-buildx-plugin
       - docker-compose-plugin 
+      - python-docker
   - name: add group docker
     group:
       name: docker
@@ -92,7 +93,7 @@
     docker_image:
       name: "{{ container_image }}"
       source: pull
-      
+
   - name: Create containers
     docker_container:
       name: "{{ container_name }}{{ item }}"
