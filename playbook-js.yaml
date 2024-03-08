@@ -1,11 +1,11 @@
 ---
-name: deploy js application
-hosts: all
-#become: yes
-tasks:
-- name: run container
-  docker_container:
-    name: webjssrv01
-    image: "{{ image }}"
-    ports: 8081:8080
-    state: started
+- name: deploy js application
+  hosts: all
+  #become: yes
+  tasks:
+  - name: run container
+    docker_container:
+      name: webjssrv01
+      image: "{{ image }}"
+      ports: 8081:8080
+      state: started
