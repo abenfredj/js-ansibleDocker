@@ -2,6 +2,8 @@
 - name: deploy js application
   hosts: all
   #become: yes
+  vars_files:
+  - vars/default.yaml
   tasks:
   - name: run container
     docker_container:
